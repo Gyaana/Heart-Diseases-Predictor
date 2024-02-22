@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aesthetic Review Page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 400px;
+            max-width: 90%;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        label {
+            color: #777;
+            display: block;
+            margin-bottom: 5px;
+            text-align: left;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 14px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        .review {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 10px;
+            text-align: left;
+        }
+
+        .author {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .rating {
+            color: #FFD700;
+        }
+        nav {
+            background: #2ecc71;
+            width: 15%;
+            padding: 20px;
+            box-sizing: border-box;
+            float: left;
+            height: calc(100vh - 55px);
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        nav ul li {
+            margin-bottom: 10px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+            font-size: 18px;
+            display: block;
+            padding: 10px;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            background: #27ae60;
+        }
+        
+        .rating-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .star {
+            cursor: pointer;
+            font-size: 24px;
+            margin: 0 5px;
+        }
+
+        .star:hover {
+            color: #FFD700;
+        }
+        </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="home.html">Home</a></li>
+            <li><a href="index.html">Predictor</a></li>
+            <li><a href="heart_disease.html">Heart Diseases</a></li>
+            <li><a href="reviews.html">Reviews</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <h1>Review Page</h1>
+        
+        <h2>Submit a Review:</h2>
+        <form id="reviewForm">
+            <label for="author">Your Name:</label>
+            <input type="text" id="author" name="author" required><br><br>
+            
+            <label for="rating">Rating:</label>
+            <div class="rating-container" id="starRating">
+                <!-- Star rating will be dynamically added here -->
+            </div><br><br>
+
+            <label for="comment">Comment:</label><br>
+            <textarea id="comment" name="comment" rows="4" required></textarea><br><br>
+            
+            <input type="submit" value="Submit Review">
+        </form>
+
+        <h2>Existing Reviews:</h2>
+        <div id="reviews">
+            <!-- Reviews will be dynamically added here -->
+        </div>
+    </div>
+
+    <script>
+        // Array to store reviews
+        var reviewList = [];
+
+        // Current selected rating
+        var currentRating = 0;
+
+        // Function to render star rating
+        function renderStarRating() {
+            var starRatingContainer = document.getElementById("starRating");
+            starRatingContainer.innerHTML = "";
+
+            for (var i = 1; i <= 5; i++) {
+                var star = document.createElement("span");
+                star.className = "star";
+                star.innerHTML = "★";
+                star.setAttribute("data-rating", i);
+                star.addEventListener("click", function() {
+                    currentRating = parseInt(this.getAttribute("data-rating"));
+                    renderStarRating(); // Update the displayed rating
+                });
+
+                if (i <= currentRating) {
+                    star.style.color = "#FFD700";
+                }
+
+                starRatingContainer.appendChild(star);
+            }
+        }
+
+        // Function to render reviews
+        function renderReviews() {
+            var reviewsContainer = document.getElementById("reviews");
+            reviewsContainer.innerHTML = "";
+
+            reviewList.forEach(function(review, index) {
+                var reviewElement = document.createElement("div");
+                reviewElement.className = "review";
+                reviewElement.innerHTML =
+                    "<span class='author'>" + review.author + "</span> - Rating: <span class='rating'>" + review.rating + "</span><br>" +
+                    review.comment +
+                    "<button onclick='deleteReview(" + index + ")'>Delete</button>";
+
+                reviewsContainer.appendChild(reviewElement);
+            });
+        }
+
+        // Function to add a new review
+        function addReview(author, rating, comment) {
+            var newReview = { author: author, rating: rating, comment: comment };
+            reviewList.push(newReview);
+            renderReviews();
+        }
+
+        // Function to delete a review
+        function deleteReview(index) {
+            reviewList.splice(index, 1);
+            renderReviews();
+        }
+
+        // Event listener for form submission
+        document.getElementById("reviewForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            
+            var author = document.getElementById("author").value;
+            var comment = document.getElementById("comment").value;
+
+            // Check if inputs are not empty
+            if (author && currentRating > 0 && comment) {
+                addReview(author, currentRating, comment);
+            }
+
+            // Clear form inputs and reset rating
+            document.getElementById("author").value = "";
+            document.getElementById("comment").value = "";
+            currentRating = 0;
+
+            renderStarRating(); 
+        });
+
+        renderStarRating();
+        renderReviews();
+    </script>
+</body>
+</html>

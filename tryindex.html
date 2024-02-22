@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heart Disease Predictor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+            color: #333;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 1em;
+            text-align: center;
+        }
+        main {
+            margin: 2em auto;
+            max-width: 600px;
+            padding: 0 1em;
+        }
+        form {
+            background-color: white;
+            padding: 1em;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        label {
+            display: block;
+            margin-bottom: 0.5em;
+        }
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 0.5em;
+            margin-bottom: 1em;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 0.5em 1em;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .result {
+            margin-top: 1em;
+            padding: 1em;
+            background-color: #dff0d8;
+            border-radius: 5px;
+            border: 1px solid #c3e6cb;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Heart Disease Predictor</h1>
+    </header>
+    <main>
+        <form id="heartDiseaseForm">
+            <label for="age">Age (years):</label>
+            <input type="number" id="age" name="age" required>
+            <label for="sex">Sex:</label>
+            <select id="sex" name="sex" required>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+            </select>
+            <label for="cholesterol">Cholesterol (mg/dL):</label>
+            <input type="number" id="cholesterol" name="cholesterol" required>
+            <label for="bloodPressure">Resting Blood Pressure (mm Hg):</label>
+            <input type="number" id="bloodPressure" name="bloodPressure" required>
+            <label for="bloodSugar">Blood Sugar > 120 mg/dL:</label>
+            <select id="bloodSugar" name="bloodSugar" required>
+                <option value="true">Yes</option>
+                <option value="false">No</option>
+            </select>
+            <label for="exerciseAngina">Exercise Induced Angina:</label>
+            <select id="exerciseAngina" name="exerciseAngina" required>
+                <option value="true">Yes</option>
+                <option value="false">No</option>
+            </select>
+            <button type="submit">Predict</button>
+        </form>
+        <div id="predictionResult" class="result" style="display:none;">
+            <h2>Prediction Result</h2>
+            <p id="predictionText"></p>
+        </div>
+    </main>
+    <script>
+        const form = document.getElementById('heartDiseaseForm');
+        const predictionResult = document.getElementById('predictionResult');
+        const predictionText = document.getElementById('predictionText');
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData(form);
+            const age = formData.get('age');
+            const sex = formData.get('sex');
+            const cholesterol = formData.get('cholesterol');
+            const bloodPressure = formData.get('bloodPressure');
+            const bloodSugar = formData.get('bloodSugar');
+            const exerciseAngina = formData.get('exerciseAngina');
+
+            // Mock prediction logic (replace with actual logic)
+            const prediction = predictHeartDisease(age, sex, cholesterol, bloodPressure, bloodSugar, exerciseAngina);
+
+            // Display result
+            predictionText.textContent = prediction ? 'High risk of heart disease.' : 'Low risk of heart disease.';
+            predictionResult.style.display = 'block';
+        });
+
+        function predictHeartDisease(age, sex, cholesterol, bloodPressure, bloodSugar, exerciseAngina) {
+            // Replace this with actual prediction logic, this is just a placeholder
+            return age > 50 && sex === 'male' && cholesterol > 200 && bloodPressure > 120 && bloodSugar === 'true' && exerciseAngina === 'true';
+        }
+    </script>
+</body>
+</html>

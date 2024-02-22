@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heart Disease</title>
+    <style>
+        /* Resetting some default styles */
+        body, h1, h2, p, ul {
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Header styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header, nav {
+            background-color: #4caf50;
+            padding: 20px;
+            text-align: center;
+        }
+
+        nav ul {
+            list-style-type: none;
+            text-align: center;
+        }
+
+        nav ul li {
+            display: inline-block;
+            margin-right: 20px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+            font-size: 18px;
+            text-transform: uppercase;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: rgb(157, 239, 179)
+        }
+
+        /* Container styles */
+        .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            padding: 50px;
+            background-color: #E1F0DA;
+            margin: 20px 0;
+        }
+
+        .content, .content1, .content2 {
+            flex: 1;
+            padding: 20px;
+        }
+
+        .image, .image1, .image2 {
+            flex: 1;
+            padding: 20px;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Button styles */
+        button {
+            padding: 10px 20px;
+            background-color: #99BC85;
+            color: #000;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        /* Footer styles */
+        .footer {
+            background-color: #D4E7C5;
+            padding: 20px;
+            text-align: center;
+            color: #000;
+        }
+
+        /* Additional styles */
+        .learn-more {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .disease-list {
+            margin-top: 20px;
+        }
+
+        .disease-list li {
+            margin-bottom: 10px;
+        }
+
+        .predictor {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .predictor button {
+            font-size: 20px;
+        }
+
+        .footer p {
+            font-size: 18px;
+        }
+
+        .footer ul {
+            list-style-type: none;
+            margin-top: 20px;
+        }
+
+        .footer ul li {
+            margin-bottom: 10px;
+        }
+
+        /* Responsive styles */
+        @media only screen and (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <center><img src="logo2.jpeg" class="logoimage" alt="Logo"></center>
+    </div>
+    <nav>
+        <ul>
+            <li><a href="home.html">Home</a></li>
+            <li><a href="index.html">Predictor</a></li>
+            <li><a href="heart_disease.html">Heart Diseases</a></li>
+            <li><a href="reviews.html">Reviews</a></li>
+        </ul>
+    </nav>
+    <div class="container">
+        <div class="content1">
+            <h2>Learn more about Heart Diseases</h2>
+            <p class="learn-more">Understanding different heart diseases can help in prevention and early detection. Here are some common heart diseases:</p>
+            <ul class="disease-list">
+                <li><a href="heart_valve_disease.html">Heart Valve Disease</a></li>
+                <li><a href="atrial_fibrillation.html">Atrial Fibrillation</a></li>
+                <li><a href="coronary_artery_disease.html">Coronary Artery Disease</a></li>
+                <li><a href="heart_failure.html">Heart Failure</a></li>
+                <li><a href="peripheral_arterial_disease.html">Peripheral Arterial Disease</a></li>
+                <li><a href="atherosclerosis.html">Atherosclerosis</a></li>
+                <li><a href="aortic_stenosis.html">Aortic Stenosis</a></li>
+                <li><a href="rheumatic_heart_disease.html">Rheumatic Heart Disease</a></li>
+                <li><a href="cardiomyopathies.html">Cardiomyopathies</a></li>
+                <li><a href="pulmonary_embolism.html">Pulmonary Embolism</a></li>
+                <li><a href="stroke.html">Stroke</a></li>
+            </ul>
+    <div class="footer">
+        <p>Explore more about heart health:</p>
+        <ul>
+            <li><a href="https://www.heart.org/en">American Heart Association</a></li>
+            <li><a href="https://www.nih.gov/health-information/heart-health">National Institutes of Health - Heart Health</a></li>
+            <li><a href="https://www.mayoclinic.org/diseases-conditions/heart-disease/symptoms-causes/syc-20353118">Mayo Clinic - Heart Disease</a></li>
+        </ul>
+    </div>
+</body>
+</html>
