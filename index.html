@@ -139,6 +139,61 @@
     .goback-button:hover {
       background-color: #0b7dda;
     }
+    #loader-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #f5f5f5;
+      z-index: 9999;
+    }
+
+    .loader {
+      border: 8px solid #f3f3f3;
+      border-top: 8px solid #2196F3;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    .loader-text {
+      margin-top: 15px;
+      font-size: 16px;
+      font-weight: bold;
+      color: #2196F3;
+    }
+
+    @keyframes bounce {
+      0%, 80%, 100% {
+        transform: scale(0);
+      }
+      40% {
+        transform: scale(1);
+      }
+    }
+
+    /* Calculating text */
+    .calculating-text {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+      color: #0078d4;
+    }
 
   </style>
 </head>
@@ -159,7 +214,12 @@
     <button onclick="nextQuestion()">Next</button>
     <p class="warning" id="validation-warning"></p>
 </div>
-      
+
+<div id="loader-container" style="display: none;">
+  <div class="loader"></div>
+  <p class="loader-text">Calculating...</p>
+</div>
+
 
 <div id="result-container">
   <h2>Result</h2>
@@ -170,6 +230,15 @@
 
 
 <script>
+
+  // Display the loader for 1.5 seconds
+  window.onload = () => {
+      const loader = document.getElementById('loader-container');
+      setTimeout(() => {
+        loader.style.display = 'none';
+      }, 1500);
+    };
+
   const questions = [
     {
       text: 'Are you male or female?',
@@ -199,8 +268,47 @@
       text: 'What is your height (cm)?',
       options: ['Less than 160', '160-180', 'More than 180']
     },
-    // Add more questions as needed
-  ];
+  {
+    text: 'Are you male or female?',
+    options: ['Male', 'Female']
+  },
+  {
+    text: 'Do you smoke?',
+    options: ['Yes', 'No']
+  },
+  {
+    text: 'How old are you?',
+    options: ['Less than 18', '18-30', '31-45', '46-60', 'More than 60']
+  },
+  {
+    text: 'Do you have diabetes?',
+    options: ['Yes', 'No']
+  },
+  {
+    text: 'How often do you exercise per week?',
+    options: ['Less than 3 times', '3-5 times', 'More than 5 times']
+  },
+  {
+    text: 'What is your weight (kg)?',
+    options: ['Less than 60', '60-80', 'More than 80']
+  },
+  {
+    text: 'What is your height (cm)?',
+    options: ['Less than 160', '160-180', 'More than 180']
+  },
+   {
+    text: 'What time do you usually go to bed?',
+    options: ['Before 10 PM.', '10 PM - 12 AM.', 'After 12 AM.']
+  },
+  {
+    text: 'How many hours of sleep do you get on average?',
+    options: ['Less than 6 hours.', '6-7 hours.', '7-8 hours.', 'More than 8 hours.']
+  },
+   {
+    text: 'How much water do you drink daily?',
+    options: ['Less than 1 liter.', '1-2 liters.', 'More than 2 liters.']
+  },
+ ];
 
 
   let currentQuestionIndex = 0;
@@ -208,18 +316,24 @@
 
 
   function nextQuestion() {
-    const selectedOption = document.querySelector('input[name="option"]:checked');
-    const validationWarning = document.getElementById('validation-warning');
+  const selectedOption = document.querySelector('input[name="option"]:checked');
+  const validationWarning = document.getElementById('validation-warning');
 
+  if (selectedOption) {
+    userAnswers[currentQuestionIndex] = selectedOption.value;
+    validationWarning.textContent = '';
+  } else {
+    validationWarning.textContent = 'Please click the answer before proceeding.';
+    return; // Prevent moving to the next question without an answer
+  }
 
-    if (selectedOption) {
-      userAnswers[currentQuestionIndex] = selectedOption.value;
-      validationWarning.textContent = '';
-    } else {
-      validationWarning.textContent = 'Please click the answer before proceeding.';
-      return; // Prevent moving to the next question without an answer
-    }
+  // Show the loader
+  const loader = document.getElementById('loader-container');
+  loader.style.display = 'flex'; // Make the loader visible
 
+  // Simulate loading and move to the next question
+  setTimeout(() => {
+    loader.style.display = 'none'; // Hide the loader after 1 second
 
     if (currentQuestionIndex < questions.length - 1) {
       currentQuestionIndex++;
@@ -227,19 +341,11 @@
     } else {
       predictHeartDisease();
     }
-  }
-
-   function goBack() {
-    if (currentQuestionIndex > 0) {
-      currentQuestionIndex--;
-      displayQuestion(questions[currentQuestionIndex]);
-    }
-  }
-
-  function backToHome() {
-  window.location.href = "home.html";
+  }, 1000); // Adjust duration as needed
 }
 
+
+  
 
 
   function displayQuestion(question) {
@@ -270,7 +376,17 @@
       optionsElement.appendChild(document.createElement('br'));
     });
   }
+  function goBack() {
+  if (currentQuestionIndex > 0) {
+    currentQuestionIndex--;
+    displayQuestion(questions[currentQuestionIndex]);
+    document.getElementById('validation-warning').textContent = ''; // Clear any warning
+  }
+}
 
+function backToHome() {
+  window.location.href = 'home.html'; // Replace 'home.html' with the actual path to our home page gyaana
+}
 
   function predictHeartDisease() {
     let result = 'Prediction Result: ';
@@ -534,3 +650,4 @@ displayQuestion(questions[currentQuestionIndex]);
   
 </body>
 </html>
+
